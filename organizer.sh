@@ -3,24 +3,27 @@
 # Create archive folder if it doesn't exist
 mkdir -p archive
 
-#ind all CSV files in current directory
+# Find all CSV files in the current directory
 for file in *.csv; do
-    # skip if no CSV files exist
+    # Skip if no CSV files exist
     [ -e "$file" ] || continue
 
-    #reate timestamp
+    # Create a timestamp
     timestamp=$(date +%Y%m%d-%H%M%S)
 
-    #efine new file name with timestamp
+    # Define new file name with timestamp
     base="${file%.csv}"
     newfile="${base}-${timestamp}.csv"
 
-    #og action
+    # Log the action in organizer.log
     echo "Archiving $file as $newfile at $(date)" >> organizer.log
     cat "$file" >> organizer.log
     echo "---------------------------------" >> organizer.log
 
-    #ove & rename to archive
+    # Move and rename the file to the archive folder
     mv "$file" archive/"$newfile"
+
+    # Optional: Print a message to the console
+    echo "Archived $file -> archive/$newfile"
 done
 
